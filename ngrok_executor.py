@@ -8,4 +8,7 @@ def start_ngrok():
     port = os.environ.get("WEBAPP_PORT")
     ngrok.set_auth_token(ngrok_token)
     http_tunnel = ngrok.connect(f":{port}", "http")
+    print(http_tunnel.public_url)
+    print(http_tunnel.public_url)
+    print(http_tunnel.public_url)
     return http_tunnel.public_url

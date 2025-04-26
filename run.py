@@ -10,6 +10,7 @@ import config
 from config import SUPPORT_LINK
 import logging
 from bot import dp, main, redis
+# from bot import dp, main
 from enums.bot_entity import BotEntity
 from middleware.database import DBSessionMiddleware
 from middleware.throttling_middleware import ThrottlingMiddleware
