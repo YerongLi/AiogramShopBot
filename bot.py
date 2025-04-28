@@ -29,6 +29,7 @@ async def webhook(request: Request):
 
     try:
         update_data = await request.json()
+        print(update_data)
         await dp.feed_webhook_update(bot, update_data)
         return {"status": "ok"}
     except Exception as e:
@@ -41,7 +42,8 @@ async def on_startup():
     await create_db_and_tables()
     await bot.set_webhook(
         url=WEBHOOK_URL,
-        secret_token=WEBHOOK_SECRET_TOKEN
+        secret_token=WEBHOOK_SECRET_TOKEN,
+        allowed_updates=["message", "callback_query"],
     )
     for admin in ADMIN_ID_LIST:
         try:

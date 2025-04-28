@@ -71,6 +71,7 @@ class AdminService:
 
     @staticmethod
     async def get_inventory_management_menu() -> tuple[str, InlineKeyboardBuilder]:
+        print('get_inventory_management_menu')
         kb_builder = InlineKeyboardBuilder()
         kb_builder.button(text=Localizator.get_text(BotEntity.ADMIN, "add_items"),
                           callback_data=AdminInventoryManagementCallback.create(level=1, entity_type=EntityType.ITEM))

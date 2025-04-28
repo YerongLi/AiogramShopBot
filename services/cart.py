@@ -48,6 +48,7 @@ class CartService:
         for cart_item in cart_items:
             item_dto = ItemDTO(category_id=cart_item.category_id, subcategory_id=cart_item.subcategory_id)
             price = await ItemRepository.get_price(item_dto, session)
+            if price is None: continue
             subcategory = await SubcategoryRepository.get_by_id(cart_item.subcategory_id, session)
             kb_builder.button(text=Localizator.get_text(BotEntity.USER, "cart_item_button").format(
                 subcategory_name=subcategory.name,
