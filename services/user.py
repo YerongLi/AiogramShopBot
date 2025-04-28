@@ -76,6 +76,7 @@ class UserService:
 
     @staticmethod
     async def get_my_profile_buttons(user_dto: UserDTO, session: Session | AsyncSession) -> tuple[str, InlineKeyboardBuilder]:
+        print('get_my_profile_buttons')
         kb_builder = InlineKeyboardBuilder()
         kb_builder.button(text=Localizator.get_text(BotEntity.USER, "top_up_balance_button"),
                           callback_data=MyProfileCallback.create(1, "top_up"))

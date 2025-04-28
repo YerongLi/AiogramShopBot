@@ -24,36 +24,12 @@ app = FastAPI()
 @app.post(config.WEBHOOK_PATH)
 async def webhook(request: Request):
     secret_token = request.headers.get("X-Telegram-Bot-Api-Secret-Token")
-    
-    data = await request.json()
-    print("📨 Raw update:", data)
-
-    # Log the chat id for debugging purposes
-    chat_id = data.get("message", {}).get("chat", {}).get("id")
-    if chat_id:
-        print(f"📱 Found chat ID: {chat_id}")
-    else:
-        print("❌ No chat ID in the update data")
-
-    print(secret_token != WEBHOOK_SECRET_TOKEN)
     if secret_token != WEBHOOK_SECRET_TOKEN:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
 
     try:
         update_data = await request.json()
-        print('Finish updating')
-        try:
-            # This assumes you're accessing some field inside update_data
-            await dp.feed_webhook_update(bot, update_data)
-
-        except KeyError as e:
-            # Log the missing field and its value
-            missing_field = e.args[0]  # The key that was not found
-            print(f"Field '{missing_field}' not found in update_data.")
-            print(f"Update data: {update_data}")
-
-        # await dp.feed_webhook_update(bot, update_data)
-        print('Finish updating')
+        await dp.feed_webhook_update(bot, update_data)
         return {"status": "ok"}
     except Exception as e:
         logging.error(f"Error processing webhook: {e}")
